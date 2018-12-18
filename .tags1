@@ -1,0 +1,17 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	0	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+system	/Users/Alex/Documents/Dev/active/skim-pdf/scr/skim_pdf.py	/^from os import system, walk, path$/;"	namespace	line:11
+walk	/Users/Alex/Documents/Dev/active/skim-pdf/scr/skim_pdf.py	/^from os import system, walk, path$/;"	namespace	line:11
+path	/Users/Alex/Documents/Dev/active/skim-pdf/scr/skim_pdf.py	/^from os import system, walk, path$/;"	namespace	line:11
+SkimPDF	/Users/Alex/Documents/Dev/active/skim-pdf/scr/skim_pdf.py	/^class SkimPDF(object):$/;"	class	line:14
+__init__	/Users/Alex/Documents/Dev/active/skim-pdf/scr/skim_pdf.py	/^    def __init__(self):$/;"	member	line:16	class:SkimPDF
+convert_to_pdf_notes	/Users/Alex/Documents/Dev/active/skim-pdf/scr/skim_pdf.py	/^    def convert_to_pdf_notes(self, in_pdf):$/;"	member	line:23	class:SkimPDF
+batch_convert_to_pdf_notes	/Users/Alex/Documents/Dev/active/skim-pdf/scr/skim_pdf.py	/^    def batch_convert_to_pdf_notes(self, folder):$/;"	member	line:43	class:SkimPDF
+convert_to_skim_notes	/Users/Alex/Documents/Dev/active/skim-pdf/scr/skim_pdf.py	/^    def convert_to_skim_notes(self, in_pdf):$/;"	member	line:62	class:SkimPDF
+batch_convert_to_skim_notes	/Users/Alex/Documents/Dev/active/skim-pdf/scr/skim_pdf.py	/^    def batch_convert_to_skim_notes(self, folder):$/;"	member	line:82	class:SkimPDF
+report	/Users/Alex/Documents/Dev/active/skim-pdf/scr/skim_pdf.py	/^    def report(self, messages):$/;"	member	line:101	class:SkimPDF
+skim	/Users/Alex/Documents/Dev/active/skim-pdf/scr/skim_pdf.py	/^skim = SkimPDF()$/;"	variable	line:111
