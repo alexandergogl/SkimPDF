@@ -1,0 +1,672 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AMApplicationBuild</key>
+	<string>444.39</string>
+	<key>AMApplicationVersion</key>
+	<string>2.9</string>
+	<key>AMDocumentVersion</key>
+	<string>2</string>
+	<key>actions</key>
+	<array>
+		<dict>
+			<key>action</key>
+			<dict>
+				<key>AMAccepts</key>
+				<dict>
+					<key>Container</key>
+					<string>List</string>
+					<key>Optional</key>
+					<true/>
+					<key>Types</key>
+					<array>
+						<string>com.apple.cocoa.path</string>
+					</array>
+				</dict>
+				<key>AMActionVersion</key>
+				<string>2.1.1</string>
+				<key>AMApplication</key>
+				<array>
+					<string>Finder</string>
+				</array>
+				<key>AMParameterProperties</key>
+				<dict/>
+				<key>AMProvides</key>
+				<dict>
+					<key>Container</key>
+					<string>List</string>
+					<key>Types</key>
+					<array>
+						<string>com.apple.cocoa.path</string>
+					</array>
+				</dict>
+				<key>AMRequiredResources</key>
+				<array/>
+				<key>ActionBundlePath</key>
+				<string>/System/Library/Automator/Get Selected Finder Items 2.action</string>
+				<key>ActionName</key>
+				<string>Ausgewählte Finder-Objekte abfragen</string>
+				<key>ActionParameters</key>
+				<dict/>
+				<key>BundleIdentifier</key>
+				<string>com.apple.Automator.GetSelectedFinderItems2</string>
+				<key>CFBundleVersion</key>
+				<string>2.1.1</string>
+				<key>CanShowSelectedItemsWhenRun</key>
+				<false/>
+				<key>CanShowWhenRun</key>
+				<true/>
+				<key>Category</key>
+				<array>
+					<string>AMCategoryFilesAndFolders</string>
+				</array>
+				<key>Class Name</key>
+				<string>AMGetSelectedFinderItemsAction</string>
+				<key>InputUUID</key>
+				<string>143E0C3E-2CB9-4064-A23D-21752BFB6CDC</string>
+				<key>Keywords</key>
+				<array/>
+				<key>OutputUUID</key>
+				<string>4C12FD8E-2220-4209-9465-D97281574CFC</string>
+				<key>UUID</key>
+				<string>F56381A4-BBE3-4B25-8C03-98A17327E566</string>
+				<key>UnlocalizedApplications</key>
+				<array>
+					<string>Finder</string>
+				</array>
+				<key>arguments</key>
+				<dict/>
+			</dict>
+		</dict>
+		<dict>
+			<key>action</key>
+			<dict>
+				<key>AMAccepts</key>
+				<dict>
+					<key>Container</key>
+					<string>List</string>
+					<key>Optional</key>
+					<true/>
+					<key>Types</key>
+					<array>
+						<string>com.apple.cocoa.string</string>
+					</array>
+				</dict>
+				<key>AMActionVersion</key>
+				<string>2.0.3</string>
+				<key>AMApplication</key>
+				<array>
+					<string>Automator</string>
+				</array>
+				<key>AMParameterProperties</key>
+				<dict>
+					<key>COMMAND_STRING</key>
+					<dict/>
+					<key>CheckedForUserDefaultShell</key>
+					<dict/>
+					<key>inputMethod</key>
+					<dict/>
+					<key>shell</key>
+					<dict/>
+					<key>source</key>
+					<dict/>
+				</dict>
+				<key>AMProvides</key>
+				<dict>
+					<key>Container</key>
+					<string>List</string>
+					<key>Types</key>
+					<array>
+						<string>com.apple.cocoa.string</string>
+					</array>
+				</dict>
+				<key>ActionBundlePath</key>
+				<string>/System/Library/Automator/Run Shell Script.action</string>
+				<key>ActionName</key>
+				<string>Shell-Skript ausführen</string>
+				<key>ActionParameters</key>
+				<dict>
+					<key>COMMAND_STRING</key>
+					<string># -*- coding: utf-8 -*-
+"""
+skim_pdf.
+
+Embed Skim notes as PDF notes or convert PDF notes to Skim notes.
+Date: 2019-01-30
+Version: 1.2
+Author: Alexander Gogl
+"""
+
+import sys
+import os
+# import system, walk, path, argv
+
+
+class SkimPDF(object):
+    """docstring for SkimPDF."""
+    def __init__(self):
+        self.skimpdf_path = '/Applications/Skim.app/Contents/SharedSupport/skimpdf'
+        self.embed_suffix = '_embedded'
+        self.unembed_suffix = '_skim_notes'
+        self.replace_original = True
+        pass
+
+    def convert_to_pdf_notes(self, in_pdf):
+        """Embed skim notes to PDF notes."""
+        if self.replace_original is False:
+            out_pdf = "%s%s.pdf" % (in_pdf[:-4], self.embed_suffix)
+        else:
+            out_pdf = in_pdf
+
+        # Embed notes
+        cmd = '%s embed "%s" "%s"' % (self.skimpdf_path, in_pdf, out_pdf)
+
+        os.system(cmd)
+        pass
+
+    def batch_convert_to_pdf_notes(self, folder):
+        """Loop through directories in given folder and embed notes."""
+        messages = []
+        i = 0
+        for path, subdirs, files in os.walk(folder):
+            for name in files:
+                if name.endswith(".pdf"):
+                    i += 1
+                    # embed notes to pdf
+                    pdf_file = "%s/%s" % (path, name)
+                    skim.convert_to_pdf_notes(pdf_file)
+
+        return i
+
+    def convert_to_skim_notes(self, in_pdf):
+        """Convert PDF notes to Skim notes (unembed)."""
+        if self.replace_original is False:
+            out_pdf = "%s%s.pdf" % (in_pdf[:-4], self.skim_suffix)
+        else:
+            out_pdf = in_pdf
+
+        # Convert PDF notes to Skim notes
+        cmd = '%s unembed "%s" "%s"' % (self.skimpdf_path, in_pdf, out_pdf)
+
+        os.system(cmd)
+        pass
+
+    def batch_convert_to_skim_notes(self, folder):
+        """Loop through directories in given folder and embed notes."""
+        messages = []
+        i = 0
+        for path, subdirs, files in os.walk(folder):
+            for name in files:
+                if name.endswith(".pdf"):
+                    i += 1
+                    # embed notes to pdf
+                    pdf_file = "%s/%s" % (path, name)
+                    skim.convert_to_skim_notes(pdf_file)
+
+        return i
+
+
+skim = SkimPDF()
+skim.replace_original = True
+
+paths = sys.argv[1:]
+
+if len(paths) &gt; 1:
+	# Multiple elements selected
+	i = 0
+	for path in paths:
+		if os.path.isdir(path):
+			i += skim.batch_convert_to_skim_notes(path)
+		else:
+			skim.convert_to_skim_notes(path)
+			i += 1
+else:
+	# one element selected
+	path = paths[0]
+	if os.path.isdir(path):
+		i = skim.batch_convert_to_skim_notes(path)
+	else:
+		skim.convert_to_skim_notes(path)
+		i = 1
+
+message = 'Converted %s files with pdf notes to skim notes' % i
+print(message)
+</string>
+					<key>CheckedForUserDefaultShell</key>
+					<true/>
+					<key>inputMethod</key>
+					<integer>1</integer>
+					<key>shell</key>
+					<string>/usr/bin/python</string>
+					<key>source</key>
+					<string></string>
+				</dict>
+				<key>BundleIdentifier</key>
+				<string>com.apple.RunShellScript</string>
+				<key>CFBundleVersion</key>
+				<string>2.0.3</string>
+				<key>CanShowSelectedItemsWhenRun</key>
+				<false/>
+				<key>CanShowWhenRun</key>
+				<true/>
+				<key>Category</key>
+				<array>
+					<string>AMCategoryUtilities</string>
+				</array>
+				<key>Class Name</key>
+				<string>RunShellScriptAction</string>
+				<key>InputUUID</key>
+				<string>ADBA5407-4223-4BC4-A5B9-9F6EDEBC0DE1</string>
+				<key>Keywords</key>
+				<array>
+					<string>Shell</string>
+					<string>Skript</string>
+					<string>Befehl</string>
+					<string>Ausführen</string>
+					<string>Unix</string>
+				</array>
+				<key>OutputUUID</key>
+				<string>A778BDB9-D6B4-4EDD-AFB6-010FAA6824E7</string>
+				<key>UUID</key>
+				<string>BC0B6F12-A7B9-404E-BC3E-43D5C6A0A746</string>
+				<key>UnlocalizedApplications</key>
+				<array>
+					<string>Automator</string>
+				</array>
+				<key>arguments</key>
+				<dict>
+					<key>0</key>
+					<dict>
+						<key>default value</key>
+						<integer>0</integer>
+						<key>name</key>
+						<string>inputMethod</string>
+						<key>required</key>
+						<string>0</string>
+						<key>type</key>
+						<string>0</string>
+						<key>uuid</key>
+						<string>0</string>
+					</dict>
+					<key>1</key>
+					<dict>
+						<key>default value</key>
+						<string></string>
+						<key>name</key>
+						<string>source</string>
+						<key>required</key>
+						<string>0</string>
+						<key>type</key>
+						<string>0</string>
+						<key>uuid</key>
+						<string>1</string>
+					</dict>
+					<key>2</key>
+					<dict>
+						<key>default value</key>
+						<false/>
+						<key>name</key>
+						<string>CheckedForUserDefaultShell</string>
+						<key>required</key>
+						<string>0</string>
+						<key>type</key>
+						<string>0</string>
+						<key>uuid</key>
+						<string>2</string>
+					</dict>
+					<key>3</key>
+					<dict>
+						<key>default value</key>
+						<string></string>
+						<key>name</key>
+						<string>COMMAND_STRING</string>
+						<key>required</key>
+						<string>0</string>
+						<key>type</key>
+						<string>0</string>
+						<key>uuid</key>
+						<string>3</string>
+					</dict>
+					<key>4</key>
+					<dict>
+						<key>default value</key>
+						<string>/bin/sh</string>
+						<key>name</key>
+						<string>shell</string>
+						<key>required</key>
+						<string>0</string>
+						<key>type</key>
+						<string>0</string>
+						<key>uuid</key>
+						<string>4</string>
+					</dict>
+				</dict>
+				<key>isViewVisible</key>
+				<true/>
+				<key>location</key>
+				<string>550.000000:370.000000</string>
+				<key>nibPath</key>
+				<string>/System/Library/Automator/Run Shell Script.action/Contents/Resources/Base.lproj/main.nib</string>
+			</dict>
+			<key>isViewVisible</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>action</key>
+			<dict>
+				<key>AMAccepts</key>
+				<dict>
+					<key>Container</key>
+					<string>List</string>
+					<key>Optional</key>
+					<false/>
+					<key>Types</key>
+					<array>
+						<string>*</string>
+					</array>
+				</dict>
+				<key>AMActionVersion</key>
+				<string>v.1.0.2</string>
+				<key>AMApplication</key>
+				<array>
+					<string>Automator</string>
+				</array>
+				<key>AMParameterProperties</key>
+				<dict>
+					<key>variableUUID</key>
+					<dict>
+						<key>isPathPopUp</key>
+						<false/>
+						<key>selectedVariableUUID</key>
+						<string>FFB71E96-5A84-4341-A19C-750EC1CC09BD</string>
+					</dict>
+				</dict>
+				<key>AMProvides</key>
+				<dict>
+					<key>Container</key>
+					<string>List</string>
+					<key>Types</key>
+					<array>
+						<string>*</string>
+					</array>
+				</dict>
+				<key>AMRequiredResources</key>
+				<array/>
+				<key>ActionBundlePath</key>
+				<string>/System/Library/Automator/Set Value of Variable.action</string>
+				<key>ActionName</key>
+				<string>Wert der Variablen festlegen</string>
+				<key>ActionParameters</key>
+				<dict>
+					<key>variableUUID</key>
+					<string>FFB71E96-5A84-4341-A19C-750EC1CC09BD</string>
+				</dict>
+				<key>BundleIdentifier</key>
+				<string>com.apple.Automator.SetValueofVariable</string>
+				<key>CFBundleVersion</key>
+				<string>1.0.2</string>
+				<key>CanShowSelectedItemsWhenRun</key>
+				<true/>
+				<key>CanShowWhenRun</key>
+				<true/>
+				<key>Category</key>
+				<array>
+					<string>AMCategoryUtilities</string>
+				</array>
+				<key>Class Name</key>
+				<string>Set_Value_of_Variable</string>
+				<key>InputUUID</key>
+				<string>B49A8830-5941-4E83-958C-896E92CDBFE4</string>
+				<key>Keywords</key>
+				<array>
+					<string>Variable</string>
+					<string>Einbinden</string>
+					<string>Eingabe</string>
+					<string>Ausgabe</string>
+					<string>Speicher</string>
+				</array>
+				<key>OutputUUID</key>
+				<string>8F3A164B-7F71-40DD-B123-BAD5DC9BDA81</string>
+				<key>UUID</key>
+				<string>B698066D-B9AA-4959-A92F-B29D59FE0079</string>
+				<key>UnlocalizedApplications</key>
+				<array>
+					<string>Automator</string>
+				</array>
+				<key>arguments</key>
+				<dict>
+					<key>0</key>
+					<dict>
+						<key>default value</key>
+						<string></string>
+						<key>name</key>
+						<string>variableUUID</string>
+						<key>required</key>
+						<string>0</string>
+						<key>type</key>
+						<string>0</string>
+						<key>uuid</key>
+						<string>0</string>
+					</dict>
+				</dict>
+				<key>isViewVisible</key>
+				<true/>
+				<key>location</key>
+				<string>550.000000:475.000000</string>
+				<key>nibPath</key>
+				<string>/System/Library/Automator/Set Value of Variable.action/Contents/Resources/Base.lproj/main.nib</string>
+			</dict>
+			<key>isViewVisible</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>action</key>
+			<dict>
+				<key>AMAccepts</key>
+				<dict>
+					<key>Container</key>
+					<string>List</string>
+					<key>Optional</key>
+					<true/>
+					<key>Types</key>
+					<array/>
+				</dict>
+				<key>AMActionVersion</key>
+				<string>v.1.0</string>
+				<key>AMApplication</key>
+				<array>
+					<string>Automator</string>
+				</array>
+				<key>AMParameterProperties</key>
+				<dict>
+					<key>message</key>
+					<dict>
+						<key>tokenizedValue</key>
+						<array>
+							<string>$(FFB71E96-5A84-4341-A19C-750EC1CC09BD)</string>
+						</array>
+					</dict>
+					<key>subtitle</key>
+					<dict/>
+					<key>title</key>
+					<dict>
+						<key>tokenizedValue</key>
+						<array>
+							<string>Convert to skim notes</string>
+						</array>
+					</dict>
+				</dict>
+				<key>AMProvides</key>
+				<dict>
+					<key>Container</key>
+					<string>List</string>
+					<key>Types</key>
+					<array/>
+				</dict>
+				<key>ActionBundlePath</key>
+				<string>/System/Library/Automator/Display Notification.action</string>
+				<key>ActionName</key>
+				<string>Mitteilungen anzeigen</string>
+				<key>ActionParameters</key>
+				<dict>
+					<key>message</key>
+					<string>$(FFB71E96-5A84-4341-A19C-750EC1CC09BD)</string>
+					<key>subtitle</key>
+					<string></string>
+					<key>title</key>
+					<string>Convert to skim notes</string>
+				</dict>
+				<key>BundleIdentifier</key>
+				<string>com.apple.Automator.Display-Notification</string>
+				<key>CFBundleVersion</key>
+				<string>1.0</string>
+				<key>CanShowSelectedItemsWhenRun</key>
+				<true/>
+				<key>CanShowWhenRun</key>
+				<false/>
+				<key>Category</key>
+				<array>
+					<string>AMCategoryUtilities</string>
+				</array>
+				<key>Class Name</key>
+				<string>AMDisplayNotificationAction</string>
+				<key>IgnoresInput</key>
+				<true/>
+				<key>InputUUID</key>
+				<string>EB224DE4-E74B-4168-BF96-740EA509F79A</string>
+				<key>Keywords</key>
+				<array/>
+				<key>OutputUUID</key>
+				<string>8DA7DAFA-5F16-4F92-9FB4-D57D23A7ECDA</string>
+				<key>UUID</key>
+				<string>F9A4A8A2-33F6-452A-BE58-8EF6A996339B</string>
+				<key>UnlocalizedApplications</key>
+				<array>
+					<string>Automator</string>
+				</array>
+				<key>arguments</key>
+				<dict>
+					<key>0</key>
+					<dict>
+						<key>default value</key>
+						<string></string>
+						<key>name</key>
+						<string>subtitle</string>
+						<key>required</key>
+						<string>0</string>
+						<key>type</key>
+						<string>0</string>
+						<key>uuid</key>
+						<string>0</string>
+					</dict>
+					<key>1</key>
+					<dict>
+						<key>default value</key>
+						<string></string>
+						<key>name</key>
+						<string>title</string>
+						<key>required</key>
+						<string>0</string>
+						<key>type</key>
+						<string>0</string>
+						<key>uuid</key>
+						<string>1</string>
+					</dict>
+					<key>2</key>
+					<dict>
+						<key>default value</key>
+						<string></string>
+						<key>name</key>
+						<string>message</string>
+						<key>required</key>
+						<string>0</string>
+						<key>type</key>
+						<string>0</string>
+						<key>uuid</key>
+						<string>2</string>
+					</dict>
+				</dict>
+				<key>isViewVisible</key>
+				<true/>
+				<key>location</key>
+				<string>550.000000:664.000000</string>
+				<key>nibPath</key>
+				<string>/System/Library/Automator/Display Notification.action/Contents/Resources/Base.lproj/main.nib</string>
+			</dict>
+			<key>isViewVisible</key>
+			<true/>
+		</dict>
+	</array>
+	<key>connectors</key>
+	<dict>
+		<key>4E418ADB-A807-462A-850F-A552329B4C78</key>
+		<dict>
+			<key>from</key>
+			<string>BC0B6F12-A7B9-404E-BC3E-43D5C6A0A746 - BC0B6F12-A7B9-404E-BC3E-43D5C6A0A746</string>
+			<key>to</key>
+			<string>B698066D-B9AA-4959-A92F-B29D59FE0079 - B698066D-B9AA-4959-A92F-B29D59FE0079</string>
+		</dict>
+		<key>91E951BA-DDDF-4658-A926-82A68903DA96</key>
+		<dict>
+			<key>from</key>
+			<string>F56381A4-BBE3-4B25-8C03-98A17327E566 - F56381A4-BBE3-4B25-8C03-98A17327E566</string>
+			<key>to</key>
+			<string>BC0B6F12-A7B9-404E-BC3E-43D5C6A0A746 - BC0B6F12-A7B9-404E-BC3E-43D5C6A0A746</string>
+		</dict>
+		<key>D7A105C1-5B2E-4DC1-9DAE-41A99FB66A3C</key>
+		<dict>
+			<key>from</key>
+			<string>B698066D-B9AA-4959-A92F-B29D59FE0079 - B698066D-B9AA-4959-A92F-B29D59FE0079</string>
+			<key>to</key>
+			<string>F9A4A8A2-33F6-452A-BE58-8EF6A996339B - F9A4A8A2-33F6-452A-BE58-8EF6A996339B</string>
+		</dict>
+	</dict>
+	<key>variables</key>
+	<array>
+		<dict>
+			<key>UUID</key>
+			<string>AC935E33-1881-44DF-886C-27DA9676279B</string>
+			<key>identifier</key>
+			<string>com.apple.Automator.Variable.Storage</string>
+			<key>name</key>
+			<string>path</string>
+		</dict>
+		<dict>
+			<key>UUID</key>
+			<string>FFB71E96-5A84-4341-A19C-750EC1CC09BD</string>
+			<key>identifier</key>
+			<string>com.apple.Automator.Variable.Storage</string>
+			<key>name</key>
+			<string>result</string>
+		</dict>
+	</array>
+	<key>workflowMetaData</key>
+	<dict>
+		<key>applicationBundleIDsByPath</key>
+		<dict/>
+		<key>applicationPaths</key>
+		<array/>
+		<key>inputTypeIdentifier</key>
+		<string>com.apple.Automator.fileSystemObject</string>
+		<key>outputTypeIdentifier</key>
+		<string>com.apple.Automator.nothing</string>
+		<key>presentationMode</key>
+		<integer>15</integer>
+		<key>processesInput</key>
+		<integer>0</integer>
+		<key>serviceInputTypeIdentifier</key>
+		<string>com.apple.Automator.fileSystemObject</string>
+		<key>serviceOutputTypeIdentifier</key>
+		<string>com.apple.Automator.nothing</string>
+		<key>serviceProcessesInput</key>
+		<integer>0</integer>
+		<key>systemImageName</key>
+		<string>NSActionTemplate</string>
+		<key>useAutomaticInputType</key>
+		<integer>1</integer>
+		<key>workflowTypeIdentifier</key>
+		<string>com.apple.Automator.servicesMenu</string>
+	</dict>
+</dict>
+</plist>
