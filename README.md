@@ -33,4 +33,12 @@ The methods `batch_convert_to_pdf_notes` and `batch_convert_to_skim_notes` batch
 
 For ease of use, I have wrapped the python script in the [Alfred Workflows](https://www.alfredapp.com/) `PDF to Skim notes.alfredworkflow` and `Skim to PDF notes.alfredworkflow` to process one or more selected PDFs.
 
-**WARNING:** The Alfred Workflows overwrite the selected files.
+**WARNING:** The workflows overwrite the selected files.
+
+## OSX-Automator
+
+Install the Automator Workflows by double-clicking on the donwloaded file and select "Install as service."
+
+The workflows process the selected PDF files (single and multiple folders and files, also nested ones). Non-PDF files are ignored.
+
+**WARNING:** The workflows overwrite the selected files.
