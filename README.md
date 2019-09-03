@@ -50,16 +50,18 @@ If you need to have more control on the script like making a copy of the convert
 #### Available options
 
 ```
+skim = SkimPDF()
+
 # Path to skimpdf
-self.skimpdf_path = '/Applications/Skim.app/Contents/SharedSupport/skimpdf'
+skim.skimpdf_path = '/Applications/Skim.app/Contents/SharedSupport/skimpdf'
 
 # Replace pdf or place a copy in place
-self.replace_original = True
+skim.replace_original = True
 
 # If skim.replace_original is set to False,
 # then you can set the embed or unembed suffix
-self.embed_suffix = '_embedded'
-self.unembed_suffix = '_skim_notes'
+skim.embed_suffix = '_embedded'
+skim.unembed_suffix = '_skim_notes'
 ```
 
 #### Available methods
