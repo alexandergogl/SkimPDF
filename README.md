@@ -8,37 +8,70 @@ PDF viewed in Skim with Skim annotations.
 ![](img/example-acrobat.png)
 The same PDF with embedded annotations viewed in Adobe Acrobat Reader DC.
 
+## How it works
+
 The Python class `SkimPDF` builds on `skimpdf` to automate the conversion step:
 
 1. Embed notes
 2. Unembed notes
-3. Batch embed and unembed notes (works with nested folders; see below)
+3. Batch embed and unembed notes (works with nested folders)
 
-## Methods
+I have used the script to embed Skim notes of 568 pdfs scattered in a folder with various subfolders. It took about 5 minutes. Be aware, that the script won't process files with a `"` in its filepath and that the files are overwritten, so make a copy before running on large sets of files.
 
-* Convert Skim notes to PDF notes (embed): `skim.convert_to_pdf_notes('../path/to/pdf file.pdf')`
-* Convert PDF notes to Skim notes (unembed): `skim.convert_to_skim_notes('../path/to/pdf file.pdf')`
-* Batch convert notes in a folder: `skim.batch_convert_to_pdf_notes('../path/to/Literature folder')` and `skim.batch_convert_to_skim_notes('../path/to/Literature folder')`
+## How to use it
 
-## Batch processing
+There are two options how to use the Python script:
 
-The methods `batch_convert_to_pdf_notes` and `batch_convert_to_skim_notes` batch embed and unembed notes. I have used it to embed Skim notes of 568 pdfs scattered in a folder with various subfolders. It took 5 minutes in total. Be aware, that the script won't process files with a `"` in its filepath.
+1. Use the Python class by loading the class as a module in a Python script.
+2. Use the OSX Automator or Alfred Workflows as a wrapper for the Python class.
 
-## Available options
+### OSX-Automator
 
-* Replace pdf or place a copy in place: `skim.replace_original = True` (default)
-* If `skim.replace_original` is set to `False`, then you can set the embed or unembed suffix with `skim.embed_suffix` and `skim.unembed_suffix`
-
-## Alfred Workflows
-
-For ease of use, I have wrapped the python script in the [Alfred Workflows](https://www.alfredapp.com/) `PDF to Skim notes.alfredworkflow` and `Skim to PDF notes.alfredworkflow` to process one or more selected PDFs.
-
-**WARNING:** The workflows overwrite the selected files.
-
-## OSX-Automator
+For ease of use, I have wrapped the python script in the OSX Automator workflows `Convert to pdf notes.workflow` and `Convert to skim notes.workflow` to process one or more selected PDFs. The script detects if one PDF or multiple PDFs or folders have been selected and automatically batch processes it.
 
 Install the Automator Workflows by double-clicking on the donwloaded file and select "Install as service."
 
-The workflows process the selected PDF files (single and multiple folders and files, also nested ones). Non-PDF files are ignored.
+The workflows process a selected PDF file, or multiple PDFs, folders, and nested folders (batch processing). Non-PDF files are ignored.
 
 **WARNING:** The workflows overwrite the selected files.
+
+### Alfred Workflows
+
+For ease of use, I have wrapped the python script in the [Alfred Workflows](https://www.alfredapp.com/) `PDF to Skim notes.alfredworkflow` and `Skim to PDF notes.alfredworkflow` to process one or more selected PDFs.
+
+The workflows process a selected PDF file, or multiple PDFs, folders, and nested folders (batch processing). Non-PDF files are ignored.
+
+**WARNING:** The workflows overwrite the selected files.
+
+### Run as Python script (CLI)
+
+If you need to have more control on the script like making a copy of the converted pdf instead of overwriting it, then you can access the Python class options by loading class as a module in a python script or via CLI.
+
+#### Available options
+
+```
+# Path to skimpdf
+self.skimpdf_path = '/Applications/Skim.app/Contents/SharedSupport/skimpdf'
+
+# Replace pdf or place a copy in place
+self.replace_original = True
+
+# If skim.replace_original is set to False,
+# then you can set the embed or unembed suffix
+self.embed_suffix = '_embedded'
+self.unembed_suffix = '_skim_notes'
+```
+
+#### Available methods
+
+```
+# Convert Skim notes to PDF notes (embed)
+skim.convert_to_pdf_notes('../path/to/pdf file.pdf')
+
+# Convert PDF notes to Skim notes (unembed)
+skim.convert_to_skim_notes('../path/to/pdf file.pdf')
+
+# Batch convert notes in a folder
+skim.batch_convert_to_pdf_notes('../path/to/Literature folder')
+skim.batch_convert_to_skim_notes('../path/to/Literature folder')
+```
