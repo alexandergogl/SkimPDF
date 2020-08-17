@@ -29,6 +29,8 @@ There are two options how to use the Python script:
 
 For ease of use, I have wrapped the python script in the OSX Automator workflows `Convert to pdf notes.workflow` and `Convert to skim notes.workflow` to process one or more selected PDFs. The script detects if one PDF or multiple PDFs or folders have been selected and automatically batch processes it.
 
+1. Download the Automator Workflows [here]("./releases/latest")
+
 Install the Automator Workflows by double-clicking on the donwloaded file and select "Install as service."
 
 The workflows process a selected PDF file, or multiple PDFs, folders, and nested folders (batch processing). Non-PDF files are ignored.
