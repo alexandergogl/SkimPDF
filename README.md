@@ -18,36 +18,47 @@ The Python class `SkimPDF` builds on `skimpdf` to automate the conversion step:
 
 I have used the script to embed Skim notes of 568 pdfs scattered in a folder with various subfolders. It took about 5 minutes. Be aware, that the script won't process files with a `"` in its filepath and that the files are overwritten, so make a copy before running on large sets of files.
 
-## How to use it
+## How to install and use it
 
-There are two options how to use the Python script:
+There are three options how to use SkimPDF:
 
-1. Use the Python class by loading the class as a module in a Python script.
-2. Use the OSX Automator or Alfred Workflows as a wrapper for the Python class.
+1. as an OSX automator workflow
+2. as an Alfred Workflow, or
+3. as a Python module
 
 ### OSX-Automator
 
 For ease of use, I have wrapped the python script in the OSX Automator workflows `Convert to pdf notes.workflow` and `Convert to skim notes.workflow` to process one or more selected PDFs. The script detects if one PDF or multiple PDFs or folders have been selected and automatically batch processes it.
 
-1. Download the Automator Workflows [here](https://github.com/alexandergogl/SkimPDF/releases/latest)
+The workflows process a selected PDF file, or multiple PDFs, folders, and nested folders (batch processing). Non-PDF files are ignored. **WARNING:** The workflows replaces the selected files.
 
-Install the Automator Workflows by double-clicking on the donwloaded file and select "Install as service."
+Install the workflow as an OSX service by:
 
-The workflows process a selected PDF file, or multiple PDFs, folders, and nested folders (batch processing). Non-PDF files are ignored.
+1. download the SkimPDF Automator Workflows [here](https://github.com/alexandergogl/SkimPDF/releases/latest)
+2. double-clicking on the donwloaded files `Convert to pdf notes.workflow` and `Convert to skim notes.workflow` and select "Install as service."
 
-**WARNING:** The workflows overwrite the selected files.
+Start the workflow by
+
+1. selecting PDF files or folders,
+2. click right,
+3. navigate to `services` (German: Dienste) > `PDF - Skim => PDF notes` or `PDF - PDF => Skim notes`
 
 ### Alfred Workflows
 
 For ease of use, I have wrapped the python script in the [Alfred Workflows](https://www.alfredapp.com/) `PDF to Skim notes.alfredworkflow` and `Skim to PDF notes.alfredworkflow` to process one or more selected PDFs.
 
-The workflows process a selected PDF file, or multiple PDFs, folders, and nested folders (batch processing). Non-PDF files are ignored.
+The workflows process a selected PDF file, or multiple PDFs, folders, and nested folders (batch processing). Non-PDF files are ignored. **WARNING:** The workflows overwrite the selected files.
 
-**WARNING:** The workflows overwrite the selected files.
+Install the workflow as an Alfred workflow by:
 
-### Run as Python script (CLI)
+1. download the Alfred Workflows [here](https://github.com/alexandergogl/SkimPDF/releases/latest)
+2. double-clicking on the donwloaded files `PDF to Skim notes.alfredworkflow` and `Skim to PDF notes.alfredworkflow`. Be aware, that you need an active Alfred power user licence to enable custom workflows.
+
+### Python module
 
 If you need to have more control on the script like making a copy of the converted pdf instead of overwriting it, then you can access the Python class options by loading class as a module in a python script or via CLI.
+
+Download the module from `src/skim_pdf.py` or [here](https://github.com/alexandergogl/SkimPDF/releases/latest) (Source code)
 
 #### Available options
 
