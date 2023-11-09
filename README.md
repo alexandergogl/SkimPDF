@@ -1,6 +1,8 @@
 # SkimPDF
 
-[Skim](https://skim-app.sourceforge.io/) is a PDF viewer with great search and annotation tools for OSX. It stores annotations in a non-standard format, thus the annotation can not viewed or edited in other PDF viewer like Adobe Acrobat Reader. However, Skim can convert Skim notes to standard PDF notes (embed) or make PDF notes editable in Skim (unembed).
+SkimPDF is a Python wrapper for the CLI `skimpdf` of [Skim](https://skim-app.sourceforge.io/). The wrapper can be used to integrate skimpdf in a larger Python workflow. Below are two examples for OSX-Automator and Alfred.
+
+Skim is a PDF viewer with great search and annotation tools for OSX. It stores annotations in a non-standard format, thus the annotation can not viewed or edited in other PDF viewer like Adobe Acrobat Reader. However, Skim can convert Skim notes to standard PDF notes (embed) or make PDF notes editable in Skim (unembed). Embedding and unembedding can be done inside of Skim.
 
 ![](img/example-skim.png)
 PDF viewed in Skim with Skim annotations.
